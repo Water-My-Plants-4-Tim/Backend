@@ -53,7 +53,7 @@ public class UserServiceIMPL implements UserService
     @Override
     public User findByName(String name)
     {
-        User uu = userrepos.findByEmail(name.toLowerCase());
+        User uu = userrepos.findByUsername(name.toLowerCase());
         if (uu == null)
         {
             throw new EntityNotFoundException("Email not found!");
@@ -74,7 +74,7 @@ public class UserServiceIMPL implements UserService
             newUser.setUserid(user.getUserid());
         }
 
-        newUser.setEmail(user.getEmail());
+        newUser.setEmail(user.getUsername());
         newUser.setPasswordNoEncrypt(user.getPassword());
 
 

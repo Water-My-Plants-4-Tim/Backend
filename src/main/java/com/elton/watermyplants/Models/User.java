@@ -22,7 +22,7 @@ public class User extends  Auditable
 
     @Column(nullable = false,
             unique = true)
-    private String email;
+    private String username;
 
 
     @Column(nullable = false)
@@ -45,10 +45,10 @@ public class User extends  Auditable
     {
     }
 
-    public User(String email, String password, Set<UserRole> roles)
+    public User(String username, String password, Set<UserRole> roles)
     {
-        this.email = email;
-        this.password = password;
+        setEmail(username);
+        setPassword(password);
         this.roles = roles;
     }
 
@@ -62,14 +62,14 @@ public class User extends  Auditable
         this.userid = userid;
     }
 
-    public String getEmail()
+    public String getUsername()
     {
-        return email;
+        return username;
     }
 
-    public void setEmail(String email)
+    public void setEmail(String username)
     {
-        this.email = email;
+        this.username = username;
     }
 
     public String getPassword()

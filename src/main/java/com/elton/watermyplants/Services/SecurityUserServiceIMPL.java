@@ -21,13 +21,13 @@ public class SecurityUserServiceIMPL implements UserDetailsService
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException
     {
-        User user = userRepository.findByEmail(s.toLowerCase());
+        User user = userRepository.findByUsername(s);
 
         if (user == null)
         {
             throw new UsernameNotFoundException("Invalid Password or Username.");
         }
 
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), user.getAuthority());
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority());
     }
 }
