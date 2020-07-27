@@ -9,7 +9,8 @@ import java.util.Objects;
 @Entity
 @Table(name = "userroles",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"userid", "roleid"})})
-public class UserRole implements Serializable
+public class UserRole extends Auditable
+        implements Serializable
 {
     @Id
     @ManyToOne
@@ -60,5 +61,21 @@ public class UserRole implements Serializable
     {
         return Objects.hash(getUser(),
             getRole());
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
+        UserRole userRoles = (UserRole) o;
+        return getUser().equals(userRoles.getUser()) &&
+                getRole().equals(userRoles.getRole());
     }
 }

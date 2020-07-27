@@ -1,7 +1,94 @@
 package com.elton.watermyplants;
 
+
+import com.elton.watermyplants.Models.*;
+import com.elton.watermyplants.Services.LocationService;
+import com.elton.watermyplants.Services.PlantService;
+import com.elton.watermyplants.Services.RoleService;
+import com.elton.watermyplants.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+@Transactional
+@Component
 public class SeedData
+        implements CommandLineRunner
 {
+        @Autowired
+    LocationService locationService;
+
+        @Autowired
+    RoleService roleService;
+        @Autowired
+    UserService userService;
+
+        @Autowired
+    PlantService plantService;
 
 
+    @Override
+    public void run(String[] args) throws Exception
+    {
+
+        /************
+         * Seed Users
+         * ************/
+        // work on this later
+//        userService.deleteAll();
+//        roleService.deleteAll();
+//        plantService.deleteAll();
+
+        Role r1 = new Role("admin");
+        Role r2 = new Role("user");
+
+        r1 = roleService.save(r1);
+        r2 = roleService.save(r2);
+
+        Set<UserRole> admins = new HashSet<>();
+
+        // admins
+
+        User u1 = new User("Gracee", "password", admins);
+        u1.getRoles().add(new UserRole(u1,r1));
+
+        User u2 = new User("Sarah", "password", admins);
+        u1.getRoles().add(new UserRole(u1,r1));
+
+
+        userService.save(u1);
+        userService.save(u2);
+
+        // users
+        Set<UserRole> users = new HashSet<>();
+        User u3 = new User("User","password", users);
+        userService.save(u3);
+
+        /************
+         * Seed PLANTS
+         ************/
+
+        Plant p1 = new Plant("once a week", "happy plant", "money tree");
+        Plant p2 = new Plant("twice a week", "better luck next time", "fiddle leaf fig");
+        Plant p3 = new Plant("one a month", "susie", "creeping jenny");
+
+        plantService.save(p1);
+        plantService.save(p2);
+        plantService.save(p3);
+
+        Location l1 = new Location("inside");
+        Location l2 = new Location("Outside");
+
+//        l1 = locationService.save(u1, p1);
+//        l2 = locationService.save(u2, p1);
+
+
+
+
+    }
 }

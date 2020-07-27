@@ -1,5 +1,8 @@
 package com.elton.watermyplants.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -11,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User
+public class User extends  Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +41,83 @@ public class User
             allowSetters = true)
     private Set<UserRole> roles = new HashSet<>();
 
+    public User()
+    {
+    }
 
+    public User(String email, String password, Set<UserRole> roles)
+    {
+        this.email = email;
+        this.password = password;
+        this.roles = roles;
+    }
 
+    public long getUserid()
+    {
+        return userid;
+    }
 
+    public void setUserid(long userid)
+    {
+        this.userid = userid;
+    }
+
+    public String getEmail()
+    {
+        return email;
+    }
+
+    public void setEmail(String email)
+    {
+        this.email = email;
+    }
+
+    public String getPassword()
+    {
+        return password;
+    }
+
+    public void setPassword(String password)
+    {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        this.password = passwordEncoder.encode(password);
+    }
+
+    public void setPasswordNoEncrypt(String password)
+    {
+        this.password = password;
+    }
+
+    public List<Location> getLocations()
+    {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations)
+    {
+        this.locations = locations;
+    }
+
+    public Set<UserRole> getRoles()
+    {
+        return roles;
+    }
+
+    public void setRoles(Set<UserRole> roles)
+    {
+        this.roles = roles;
+    }
+
+    @JsonIgnore
+    public List<SimpleGrantedAuthority> getAuthority()
+    {
+        List<SimpleGrantedAuthority> rtnList = new ArrayList<>();
+
+        for(UserRole r : this.roles)
+        {
+            String myString = "ROLE_" + r.getRole().getName().toUpperCase();
+            rtnList.add(new SimpleGrantedAuthority(myString));
+        } 
+        return rtnList;
+    }
 }

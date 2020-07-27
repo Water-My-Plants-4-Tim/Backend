@@ -8,7 +8,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "plantlocation")
-public class PlantLocation implements Serializable
+public class PlantLocation extends Auditable implements Serializable
 {
     @Id
     @ManyToOne

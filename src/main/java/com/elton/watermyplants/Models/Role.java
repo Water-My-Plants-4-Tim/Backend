@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "roles")
-public class Role
+public class Role extends  Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,4 +26,43 @@ public class Role
     @JsonIgnoreProperties(value = "role",
             allowSetters = true)
     private Set<UserRole> users = new HashSet<>();
+
+    public Role()
+    {
+    }
+
+    public Role(String name)
+    {
+        this.name = name;
+    }
+
+    public long getRoleid()
+    {
+        return roleid;
+    }
+
+    public void setRoleid(long roleid)
+    {
+        this.roleid = roleid;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public Set<UserRole> getUsers()
+    {
+        return users;
+    }
+
+    public void setUsers(Set<UserRole> users)
+    {
+        this.users = users;
+    }
 }
