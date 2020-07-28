@@ -1,5 +1,6 @@
 package com.elton.watermyplants.Services;
 
+import com.elton.watermyplants.Models.Location;
 import com.elton.watermyplants.Models.Plant;
 
 
@@ -9,10 +10,10 @@ public interface PlantService
 {
     List<Plant>findAll();
 
-    Plant findProductById(long id);
+    Plant findLocationById(long id);
 
     void delete(long id);
 
-    Plant save(Plant product);
+    Plant save(Plant plant);
 
 }

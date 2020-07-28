@@ -13,12 +13,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Transactional
 @Service(value = "locationService")
 public class LocationServiceIMPL implements LocationService
 {
+
 
     @Autowired
     private LocationRepo locationRepo;
@@ -29,21 +32,20 @@ public class LocationServiceIMPL implements LocationService
     private PlantRepo plantRepo;
 
     @Override
-    public List<Location> findAllByUserId(Long userid)
+    public List<Location> findall()
     {
-        return null;
+        List<Location> list = new ArrayList<>();
+        locationRepo.findAll()
+                .iterator()
+                .forEachRemaining(list::add);
+        return list;
     }
 
-    @Override
-    public Location findLocationById(long id)
-    {
-        return locationRepo.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Car id " + id + " not found!"));
-    }
 
     @Override
     public Location save(User user, Plant plant)
     {
+
         Location newLocation = new Location();
 
         User dbuser = userrepos.findById(user.getUserid())
@@ -51,12 +53,12 @@ public class LocationServiceIMPL implements LocationService
         newLocation.setUser(dbuser);
 
         Plant dbplant = plantRepo.findById(plant.getPlanttid())
-                .orElseThrow(() -> new EntityNotFoundException("Plant id " + plant.getPlanttid() + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Product id " + plant.getPlanttid() + " not found"));
 
         PlantLocation newPlantLocation = new PlantLocation();
         newPlantLocation.setLocation(newLocation);
         newPlantLocation.setPlant(dbplant);
-        newLocation.getPlantLocations()
+        newPlantLocation.getPlant()
                 .add(newPlantLocation);
 
         return locationRepo.save(newLocation);
@@ -65,6 +67,12 @@ public class LocationServiceIMPL implements LocationService
     @Override
     public Location save(Location location, Plant plant)
     {
+
+//        Location updatelocation = locationRepo.findById(location.getLocationid())
+//                .orElseThrow(() -> new EntityNotFoundException("Location " + location.getLocationid() + " not found"));
+//        Plant updatePlant = plantRepo.findById(plant.getPlanttid())
+//                .orElseThrow(() -> new EntityNotFoundException("Product id " + plant.getPlanttid() + " not found"));
+
        return null;
     }
 
@@ -72,5 +80,18 @@ public class LocationServiceIMPL implements LocationService
     public void delete(Location location, Plant plant)
     {
 
+    }
+
+    @Override
+    public List<Location> findAllByUserId(Long userid)
+    {
+        return null;
+    }
+
+    @Override
+    public Location findById(long id)
+    {
+        return locationRepo.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Location id " + id + " not found!"));
     }
 }

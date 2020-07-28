@@ -1,8 +1,6 @@
 package com.elton.watermyplants.Services;
 
-import com.elton.watermyplants.Models.Role;
-import com.elton.watermyplants.Models.User;
-import com.elton.watermyplants.Models.UserRole;
+import com.elton.watermyplants.Models.*;
 import com.elton.watermyplants.Repos.RoleRepo;
 import com.elton.watermyplants.Repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +22,9 @@ public class UserServiceIMPL implements UserService
 
     @Autowired
     private UserRepo userrepos;
+
+    @Autowired
+    private LocationService locationService;
 
     @Override
     public List<User> findAll()
@@ -61,7 +62,6 @@ public class UserServiceIMPL implements UserService
         return uu;
     }
 
-    // need to do save
     @Override
     public User save(User user)
     {
@@ -78,11 +78,6 @@ public class UserServiceIMPL implements UserService
         newUser.setPasswordNoEncrypt(user.getPassword());
 
 
-        if (user.getLocations()
-                .size() > 0)
-        {
-            throw new EntityExistsException("Locations are not added through users");
-        }
 
         newUser.getRoles()
                 .clear();

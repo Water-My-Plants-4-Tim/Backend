@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,7 @@ public class UserController
 
     // GET http://localhost:2019/users/user/1
     //working
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping(value = "/user/{userId}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserById(
@@ -69,6 +71,7 @@ public class UserController
    // DELETE http://localhost:2019/users/user/1
     //working (but double check) hah
 
+   @PreAuthorize("hasAnyRole('ADMIN')")
    @DeleteMapping(value = "/user/{userId}")
    public ResponseEntity<?> deleteUserById(
            @PathVariable
@@ -77,5 +80,7 @@ public class UserController
        userService.delete(userId);
        return new ResponseEntity<>(HttpStatus.OK);
    }
+
+
 
 }

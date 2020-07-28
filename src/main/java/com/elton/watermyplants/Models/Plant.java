@@ -3,8 +3,8 @@ package com.elton.watermyplants.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "plants")
@@ -23,7 +23,7 @@ public class Plant extends Auditable
             cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "product",
             allowSetters = true)
-    private List<PlantLocation> plantLocations = new ArrayList<>();
+    private Set<PlantLocation> plantLocations = new HashSet<>();
 
     public Plant()
     {
@@ -76,13 +76,18 @@ public class Plant extends Auditable
         this.species = species;
     }
 
-    public List<PlantLocation> getPlantLocations()
+    public Set<PlantLocation> getPlantLocations()
     {
         return plantLocations;
     }
 
-    public void setPlantLocations(List<PlantLocation> plantLocations)
+    public void setPlantLocations(Set<PlantLocation> plantLocations)
     {
         this.plantLocations = plantLocations;
+    }
+
+    public void add(PlantLocation newPlantLocation)
+    {
+
     }
 }

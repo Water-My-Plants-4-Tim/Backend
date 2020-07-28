@@ -7,7 +7,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "plantlocation")
+@Table(name = "plantlocations")
+@IdClass(PlantLocationId.class)
 public class PlantLocation extends Auditable implements Serializable
 {
     @Id
@@ -19,7 +20,7 @@ public class PlantLocation extends Auditable implements Serializable
     @Id
     @ManyToOne
     @JoinColumn(name = "plantid")
-    @JsonIgnoreProperties(value = "locationss")
+    @JsonIgnoreProperties(value = "locations")
     private Plant plant;
 
     public PlantLocation()
@@ -52,10 +53,21 @@ public class PlantLocation extends Auditable implements Serializable
         this.plant = plant;
     }
 
+
     @Override
     public int hashCode()
     {
-        return Objects.hash(location,
-                plant);
+//        return Objects.hash(location, plant);
+        return 37;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PlantLocation that = (PlantLocation) o;
+        return Objects.equals(location, that.location) &&
+                Objects.equals(plant, that.plant);
     }
 }

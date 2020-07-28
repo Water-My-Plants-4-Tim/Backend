@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "locations")
@@ -20,7 +22,7 @@ public class Location extends Auditable
             cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "cart",
             allowSetters = true)
-    private List<PlantLocation> plantLocations = new ArrayList<>();
+    private Set<PlantLocation> plantLocations = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "userid",
@@ -58,12 +60,12 @@ public class Location extends Auditable
         this.name = name;
     }
 
-    public List<PlantLocation> getPlantLocations()
+    public Set<PlantLocation> getPlantLocations()
     {
         return plantLocations;
     }
 
-    public void setPlantLocations(List<PlantLocation> plantLocations)
+    public void setPlantLocations(Set<PlantLocation> plantLocations)
     {
         this.plantLocations = plantLocations;
     }

@@ -7,8 +7,8 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "userroles",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"userid", "roleid"})})
+@Table(name = "userroles")
+@IdClass(UserRolesId.class)
 public class UserRole extends Auditable
         implements Serializable
 {
@@ -57,25 +57,18 @@ public class UserRole extends Auditable
     }
 
     @Override
-    public int hashCode()
+    public boolean equals(Object o)
     {
-        return Objects.hash(getUser(),
-            getRole());
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserRole userRole = (UserRole) o;
+        return Objects.equals(user, userRole.user) &&
+                Objects.equals(role, userRole.role);
     }
 
     @Override
-    public boolean equals(Object o)
+    public int hashCode()
     {
-        if (this == o)
-        {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass())
-        {
-            return false;
-        }
-        UserRole userRoles = (UserRole) o;
-        return getUser().equals(userRoles.getUser()) &&
-                getRole().equals(userRoles.getRole());
+        return 37;
     }
 }

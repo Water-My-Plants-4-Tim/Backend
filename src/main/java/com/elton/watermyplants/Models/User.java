@@ -45,11 +45,10 @@ public class User extends  Auditable
     {
     }
 
-    public User(String username, String password, Set<UserRole> roles)
+    public User(String username, String password)
     {
         setEmail(username);
         setPassword(password);
-        this.roles = roles;
     }
 
     public long getUserid()
@@ -119,5 +118,9 @@ public class User extends  Auditable
             rtnList.add(new SimpleGrantedAuthority(myString));
         } 
         return rtnList;
+    }
+
+    public void add(PlantLocation plantLocation)
+    {
     }
 }

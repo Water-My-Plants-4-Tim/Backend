@@ -8,15 +8,19 @@ import java.util.List;
 
 public interface LocationService
 {
+
+    List<Location> findall();
+
     List<Location> findAllByUserId(Long userid);
 
-    Location findLocationById(long id);
+    Location findById(long id);
 
     Location save(User user,
                   Plant plant);
 
     Location save(Location location,
                   Plant plant);
+
 
     void delete(Location location,
                 Plant plant);

@@ -11,7 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -50,15 +50,29 @@ public class SeedData
         r1 = roleService.save(r1);
         r2 = roleService.save(r2);
 
+        Plant p1 = new Plant("once a week", "happy plant", "money tree");
+        Plant p2 = new Plant("twice a week", "better luck next time", "fiddle leaf fig");
+        Plant p3 = new Plant("one a month", "susie", "creeping jenny");
+
+        Location l1 = new Location("inside");
+        Location l2 = new Location("outside");
+
+        p1.getPlantLocations().add(new PlantLocation(l1, p1));
+        p1.getPlantLocations().add(new PlantLocation(l2, p1));
+
+
+        plantService.save(p1);
+        plantService.save(p2);
+        plantService.save(p3);
+
         Set<UserRole> admins = new HashSet<>();
-
         // admins
-
-        User u1 = new User("Gracee", "password", admins);
-        u1.getRoles().add(new UserRole(u1,r1));
-
-        User u2 = new User("Sarah", "password", admins);
-        u1.getRoles().add(new UserRole(u1,r1));
+        User u1 = new User("Gracee", "password");
+        u1.getRoles()
+                .add(new UserRole(u1, r1));
+        User u2 = new User("Sarah", "password");
+        u2.getRoles()
+                .add(new UserRole(u2, r2));
 
 
         userService.save(u1);
@@ -66,27 +80,10 @@ public class SeedData
 
         // users
         Set<UserRole> users = new HashSet<>();
-        User u3 = new User("User","password", users);
+        User u3 = new User("User","password");
+        u1.getRoles()
+                .add(new UserRole(u1, r2));
         userService.save(u3);
-
-        /************
-         * Seed PLANTS
-         ************/
-
-        Plant p1 = new Plant("once a week", "happy plant", "money tree");
-        Plant p2 = new Plant("twice a week", "better luck next time", "fiddle leaf fig");
-        Plant p3 = new Plant("one a month", "susie", "creeping jenny");
-
-        plantService.save(p1);
-        plantService.save(p2);
-        plantService.save(p3);
-
-        Location l1 = new Location("inside");
-        Location l2 = new Location("Outside");
-
-//        l1 = locationService.save(u1, p1);
-//        l2 = locationService.save(u2, p1);
-
 
 
 

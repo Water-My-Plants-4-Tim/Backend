@@ -1,6 +1,10 @@
 package com.elton.watermyplants.Services;
 
+import com.elton.watermyplants.Models.Location;
 import com.elton.watermyplants.Models.Plant;
+import com.elton.watermyplants.Models.PlantLocation;
+import com.elton.watermyplants.Models.User;
+import com.elton.watermyplants.Repos.LocationRepo;
 import com.elton.watermyplants.Repos.PlantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +19,12 @@ import java.util.List;
 @Service(value = "plantService")
 public class PlantServiceIMPL implements PlantService
 {
+    @Autowired
+    private LocationRepo locationRepo;
+
+    @Autowired
+    private PlantService plantService;
+
     @Autowired
     private PlantRepo plantRepo;
 
@@ -33,7 +43,7 @@ public class PlantServiceIMPL implements PlantService
     }
 
     @Override
-    public Plant findProductById(long id)
+    public Plant findLocationById(long id)
     {
         return plantRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Plant id " + id + " not found!"));
@@ -42,19 +52,32 @@ public class PlantServiceIMPL implements PlantService
     @Override
     public void delete(long id)
     {
+        plantRepo.findById(id)
+            .orElseThrow(() -> new EntityNotFoundException("Product id " + id + " not found!"));
+        plantRepo.deleteById(id);
 
     }
 
     @Override
     public Plant save(Plant plant)
     {
-        if (plant.getPlantLocations()
-                .size() > 0)
-        {
-            throw new EntityExistsException("Locatuons are not updated through Plants");
-        }
-        ;
 
-        return plantRepo.save(plant);
+        Plant newPlant = new Plant();
+
+        newPlant.setFrequency(plant.getFrequency());
+        newPlant.setNickname(plant.getNickname());
+        newPlant.setPlantLocations(plant.getPlantLocations());
+        newPlant.setSpecies(plant.getSpecies());
+
+        newPlant.getPlantLocations()
+                .clear();
+        for (PlantLocation p : plant.getPlantLocations())
+        {
+            newPlant.getPlantLocations()
+                    .add(new PlantLocation( p.getLocation(),p.getPlant()));
+        }
+
+
+        return plantRepo.save(newPlant);
     }
 }
