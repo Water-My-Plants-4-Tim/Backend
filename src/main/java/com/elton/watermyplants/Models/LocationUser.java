@@ -17,10 +17,12 @@ public class LocationUser extends Auditable
     @Column(nullable = false)
     private String locationuser;
 
+
+
     @ManyToOne
     @JoinColumn(name = "userid",
             nullable = false)
-    @JsonIgnoreProperties(value = "carts",
+    @JsonIgnoreProperties(value = "locationusers",
             allowSetters = true)
     private User user;
 
