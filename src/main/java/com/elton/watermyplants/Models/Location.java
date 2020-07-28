@@ -3,9 +3,7 @@ package com.elton.watermyplants.Models;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -38,6 +36,7 @@ public class Location extends Auditable
     public Location(String name)
     {
         this.name = name;
+
     }
 
     public long getLocationid()

@@ -18,6 +18,9 @@ public class UserServiceIMPL implements UserService
 {
 
     @Autowired
+    private PlantService plantService;
+
+    @Autowired
     private RoleService roleService;
 
     @Autowired
@@ -77,6 +80,15 @@ public class UserServiceIMPL implements UserService
         newUser.setEmail(user.getUsername());
         newUser.setPasswordNoEncrypt(user.getPassword());
 
+        // not working i think???
+        newUser.getLocations()
+                .clear();
+        for (Location l: user.getLocations())
+        {
+            Location newLocation = new Location(l.getName());
+
+            newUser.getLocations().add(newLocation);
+        }
 
 
         newUser.getRoles()

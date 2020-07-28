@@ -45,17 +45,17 @@ public class LocationServiceIMPL implements LocationService
     @Override
     public Location save(User user, Plant plant)
     {
-
         Location newLocation = new Location();
 
         User dbuser = userrepos.findById(user.getUserid())
                 .orElseThrow(() -> new EntityNotFoundException("User id " + user.getUserid() + " not found"));
         newLocation.setUser(dbuser);
 
-        Plant dbplant = plantRepo.findById(plant.getPlanttid())
-                .orElseThrow(() -> new EntityNotFoundException("Product id " + plant.getPlanttid() + " not found"));
+        Plant dbplant = plantRepo.findById(plant.getPlantid())
+                .orElseThrow(() -> new EntityNotFoundException("Product id " + plant.getPlantid() + " not found"));
 
         PlantLocation newPlantLocation = new PlantLocation();
+
         newPlantLocation.setLocation(newLocation);
         newPlantLocation.setPlant(dbplant);
         newPlantLocation.getPlant()

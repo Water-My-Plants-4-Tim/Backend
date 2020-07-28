@@ -12,16 +12,21 @@ public class Plant extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long planttid;
+    private long plantid;
 
-
+    @Column(nullable = false,
+            unique = true)
     private String frequency;
+
+    @Column
     private String nickname;
+    @Column(nullable = false,
+            unique = true)
     private String species;
 
     @OneToMany(mappedBy = "plant",
             cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = "product",
+    @JsonIgnoreProperties(value = "plant",
             allowSetters = true)
     private Set<PlantLocation> plantLocations = new HashSet<>();
 
@@ -36,14 +41,14 @@ public class Plant extends Auditable
         this.species = species;
     }
 
-    public long getPlanttid()
+    public long getPlantid()
     {
-        return planttid;
+        return plantid;
     }
 
-    public void setPlanttid(long planttid)
+    public void setPlantid(long plantid)
     {
-        this.planttid = planttid;
+        this.plantid = plantid;
     }
 
     public String getFrequency()
