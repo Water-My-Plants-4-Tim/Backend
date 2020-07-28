@@ -1,6 +1,7 @@
 package com.elton.watermyplants.Models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class PlantLocationId
         implements Serializable

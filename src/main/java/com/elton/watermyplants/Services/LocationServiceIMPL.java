@@ -45,23 +45,25 @@ public class LocationServiceIMPL implements LocationService
     @Override
     public Location save(User user, Plant plant)
     {
-        Location newLocation = new Location();
+//        Location newLocation = new Location();
+//
+//        User dbuser = userrepos.findById(user.getUserid())
+//                .orElseThrow(() -> new EntityNotFoundException("User id " + user.getUserid() + " not found"));
+//        newLocation.setUser(dbuser);
+//
+//        Plant dbplant = plantRepo.findById(plant.getPlantid())
+//                .orElseThrow(() -> new EntityNotFoundException("Plant id " + plant.getPlantid() + " not found"));
+//
+//        PlantLocation newPlantLocation = new PlantLocation();
+//
+//        newPlantLocation.setLocation(newLocation);
+//        newPlantLocation.setPlant(dbplant);
+//        newPlantLocation.getPlant()
+//                .add(newPlantLocation);
+//
+//        return locationRepo.save(newLocation);
 
-        User dbuser = userrepos.findById(user.getUserid())
-                .orElseThrow(() -> new EntityNotFoundException("User id " + user.getUserid() + " not found"));
-        newLocation.setUser(dbuser);
-
-        Plant dbplant = plantRepo.findById(plant.getPlantid())
-                .orElseThrow(() -> new EntityNotFoundException("Product id " + plant.getPlantid() + " not found"));
-
-        PlantLocation newPlantLocation = new PlantLocation();
-
-        newPlantLocation.setLocation(newLocation);
-        newPlantLocation.setPlant(dbplant);
-        newPlantLocation.getPlant()
-                .add(newPlantLocation);
-
-        return locationRepo.save(newLocation);
+        return null;
     }
 
     @Override

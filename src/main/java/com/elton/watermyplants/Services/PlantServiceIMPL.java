@@ -53,11 +53,12 @@ public class PlantServiceIMPL implements PlantService
     public void delete(long id)
     {
         plantRepo.findById(id)
-            .orElseThrow(() -> new EntityNotFoundException("Product id " + id + " not found!"));
+            .orElseThrow(() -> new EntityNotFoundException("Plant " + id + " not found!"));
         plantRepo.deleteById(id);
 
     }
 
+    @Transactional
     @Override
     public Plant save(Plant plant)
     {
@@ -66,15 +67,19 @@ public class PlantServiceIMPL implements PlantService
 
         newPlant.setFrequency(plant.getFrequency());
         newPlant.setNickname(plant.getNickname());
-        newPlant.setPlantLocations(plant.getPlantLocations());
         newPlant.setSpecies(plant.getSpecies());
 
         newPlant.getPlantLocations()
                 .clear();
+        System.out.println(plant.getPlantLocations().size());
         for (PlantLocation p : plant.getPlantLocations())
         {
+            System.out.println(p.getLocation().getLocationid());
+            Location newLocation = locationRepo.findById(p.getLocation().getLocationid())
+                    .orElseThrow(() -> new EntityNotFoundException("Location " + p.getLocation().getLocationid() + " not found!"));
+
             newPlant.getPlantLocations()
-                    .add(new PlantLocation( p.getLocation(),p.getPlant()));
+                    .add(new PlantLocation( newLocation, newPlant));
         }
 
 

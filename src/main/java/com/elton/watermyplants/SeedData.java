@@ -2,6 +2,7 @@ package com.elton.watermyplants;
 
 
 import com.elton.watermyplants.Models.*;
+import com.elton.watermyplants.Repos.LocationRepo;
 import com.elton.watermyplants.Services.LocationService;
 import com.elton.watermyplants.Services.PlantService;
 import com.elton.watermyplants.Services.RoleService;
@@ -31,6 +32,9 @@ public class SeedData
         @Autowired
     PlantService plantService;
 
+        @Autowired
+    LocationRepo locationRepo;
+
 
     @Override
     public void run(String[] args) throws Exception
@@ -57,13 +61,17 @@ public class SeedData
         Location l1 = new Location("inside");
         Location l2 = new Location("outside");
 
+        l1 = locationRepo.save(l1);
+        l2 =locationRepo.save(l2);
+
         p1.getPlantLocations().add(new PlantLocation(l1, p1));
         p1.getPlantLocations().add(new PlantLocation(l2, p1));
 
+        System.out.println(p1.getPlantLocations().size());
 
-        plantService.save(p1);
-        plantService.save(p2);
-        plantService.save(p3);
+        p1 = plantService.save(p1);
+        p2 = plantService.save(p2);
+        p3 = plantService.save(p3);
 
         Set<UserRole> admins = new HashSet<>();
         // admins
@@ -75,17 +83,17 @@ public class SeedData
                 .add(new UserRole(u2, r2));
 
 
-        userService.save(u1);
-        userService.save(u2);
+        u1 = userService.save(u1);
+        u2 =userService.save(u2);
 
         // users
         Set<UserRole> users = new HashSet<>();
         User u3 = new User("User","password");
         u1.getRoles()
                 .add(new UserRole(u1, r2));
-        userService.save(u3);
+        u3 = userService.save(u3);
 
 
-
+        System.out.println("hello");
     }
 }

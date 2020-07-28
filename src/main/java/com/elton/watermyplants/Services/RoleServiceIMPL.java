@@ -1,6 +1,8 @@
 package com.elton.watermyplants.Services;
 
 import com.elton.watermyplants.Models.Role;
+import com.elton.watermyplants.Models.User;
+import com.elton.watermyplants.Models.UserRole;
 import com.elton.watermyplants.Repos.RoleRepo;
 import com.elton.watermyplants.Repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +63,20 @@ public class RoleServiceIMPL implements RoleService
         rolerepos.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Role id " + id + " not found!"));
         rolerepos.deleteById(id);
+    }
+
+    @Override
+    public Role findByName(String name)
+    {
+        Role rr = rolerepos.findByName(name);
+
+        if (rr != null)
+        {
+            return rr;
+        } else
+        {
+            throw new EntityNotFoundException(name);
+        }
     }
 
     @Override

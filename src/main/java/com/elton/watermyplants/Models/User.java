@@ -30,10 +30,10 @@ public class User extends  Auditable
     private String password;
 
     @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "user",
             allowSetters = true)
-    private List<Location> locations = new ArrayList<>();
+    private List<LocationUser>  locationUsers = new ArrayList<>();
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL)
@@ -47,8 +47,14 @@ public class User extends  Auditable
 
     public User(String username, String password)
     {
-        setEmail(username);
+        setUsername(username);
         setPassword(password);
+    }
+
+    public User(Set<UserRole> roles ,String username, String password)
+    {
+        setPassword(password);
+        this.roles = roles;
     }
 
     public long getUserid()
@@ -66,10 +72,7 @@ public class User extends  Auditable
         return username;
     }
 
-    public void setEmail(String username)
-    {
-        this.username = username;
-    }
+
 
     public String getPassword()
     {
@@ -87,14 +90,19 @@ public class User extends  Auditable
         this.password = password;
     }
 
-    public List<Location> getLocations()
+    public void setUsername(String username)
     {
-        return locations;
+        this.username = username;
     }
 
-    public void setLocations(List<Location> locations)
+    public List<LocationUser> getLocationUsers()
     {
-        this.locations = locations;
+        return locationUsers;
+    }
+
+    public void setLocationUsers(List<LocationUser> locationUsers)
+    {
+        this.locationUsers = locationUsers;
     }
 
     public Set<UserRole> getRoles()
@@ -120,7 +128,5 @@ public class User extends  Auditable
         return rtnList;
     }
 
-    public void add(PlantLocation plantLocation)
-    {
-    }
+
 }

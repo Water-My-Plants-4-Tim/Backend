@@ -14,21 +14,23 @@
 // */
 //@Configuration
 //public class DataSourceConfig
-//{
-//    /**
-//     * Reads the value from the environment variable spring.datasource.url. If the environment variable does not exists, defaults to a null string
-//     */
-//    @Value("${spring.datasource.url:}")
-//    private String dbUrl;
+//{/**
+// * Reads the value from the environment variable spring.datasource.url. If the environment variable does not exists, defaults to a null string
+// */
+//@Value("${spring.datasource.url:}")
+//private String dbUrl;
+//
 //    /**
 //     * Reads values from application.properties. If local.run.db does not exist, default to H2
 //     */
 //    @Value("${local.run.db:H2}")
 //    private String dbValue;
+//
 //    String myUrlString;
 //    String myDriverClass;
 //    String myDBUser;
 //    String myDBPassword;
+//
 //    @Bean
 //    public DataSource dataSource()
 //    {
@@ -46,6 +48,7 @@
 //            myDriverClass = "org.h2.Driver";
 //            myDBUser = "sa";
 //            myDBPassword = "";
+//
 //            return DataSourceBuilder.create()
 //                    .username(myDBUser)
 //                    .password(myDBPassword)

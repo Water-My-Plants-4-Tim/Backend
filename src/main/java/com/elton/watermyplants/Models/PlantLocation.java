@@ -14,13 +14,13 @@ public class PlantLocation extends Auditable implements Serializable
     @Id
     @ManyToOne
     @JoinColumn(name = "locationid")
-    @JsonIgnoreProperties(value = "plants")
+    @JsonIgnoreProperties(value = "plants", allowSetters = true)
     private Location location;
 
     @Id
     @ManyToOne
     @JoinColumn(name = "plantid")
-    @JsonIgnoreProperties(value = "locations")
+    @JsonIgnoreProperties(value = "locations", allowSetters = true)
     private Plant plant;
 
     public PlantLocation()
@@ -53,6 +53,21 @@ public class PlantLocation extends Auditable implements Serializable
         this.plant = plant;
     }
 
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (!(o instanceof PlantLocation))
+        {
+            return false;
+        }
+        PlantLocation that = (PlantLocation) o;
+        return ((plant == null) ? 0 : plant.getPlantid()) == ((that.plant == null) ? 0 : that.plant.getPlantid()) &&
+                ((location == null) ? 0 : location.getLocationid()) == ((that.location == null) ? 0 : that.location.getLocationid());
+    }
 
     @Override
     public int hashCode()
@@ -61,13 +76,5 @@ public class PlantLocation extends Auditable implements Serializable
         return 37;
     }
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        PlantLocation that = (PlantLocation) o;
-        return Objects.equals(location, that.location) &&
-                Objects.equals(plant, that.plant);
-    }
+
 }

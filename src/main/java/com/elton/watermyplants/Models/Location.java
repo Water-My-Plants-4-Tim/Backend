@@ -17,17 +17,11 @@ public class Location extends Auditable
     private String name;
 
     @OneToMany(mappedBy = "location",
-            cascade = CascadeType.ALL)
-    @JsonIgnoreProperties(value = "cart",
+            cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnoreProperties(value = "location",
             allowSetters = true)
     private Set<PlantLocation> plantLocations = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "userid",
-            nullable = false)
-    @JsonIgnoreProperties(value = "carts",
-            allowSetters = true)
-    private User user;
 
     public Location()
     {
@@ -69,13 +63,5 @@ public class Location extends Auditable
         this.plantLocations = plantLocations;
     }
 
-    public User getUser()
-    {
-        return user;
-    }
 
-    public void setUser(User user)
-    {
-        this.user = user;
-    }
 }

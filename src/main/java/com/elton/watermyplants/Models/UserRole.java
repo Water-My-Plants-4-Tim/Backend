@@ -59,11 +59,17 @@ public class UserRole extends Auditable
     @Override
     public boolean equals(Object o)
     {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserRole userRole = (UserRole) o;
-        return Objects.equals(user, userRole.user) &&
-                Objects.equals(role, userRole.role);
+        if (this == o)
+        {
+            return true;
+        }
+        if (!(o instanceof UserRole))
+        {
+            return false;
+        }
+        UserRole that = (UserRole) o;
+        return ((user == null) ? 0 : user.getUserid()) == ((that.user == null) ? 0 : that.user.getUserid()) &&
+                ((role == null) ? 0 : role.getRoleid()) == ((that.role == null) ? 0 : that.role.getRoleid());
     }
 
     @Override

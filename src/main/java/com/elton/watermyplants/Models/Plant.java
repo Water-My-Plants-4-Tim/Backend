@@ -20,12 +20,13 @@ public class Plant extends Auditable
 
     @Column
     private String nickname;
+
     @Column(nullable = false,
             unique = true)
     private String species;
 
     @OneToMany(mappedBy = "plant",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnoreProperties(value = "plant",
             allowSetters = true)
     private Set<PlantLocation> plantLocations = new HashSet<>();
@@ -91,8 +92,5 @@ public class Plant extends Auditable
         this.plantLocations = plantLocations;
     }
 
-    public void add(PlantLocation newPlantLocation)
-    {
 
-    }
 }
