@@ -1,5 +1,5 @@
 package com.elton.watermyplants.Models;
 
-public class Plant
+public class UserPlants
 {
 }
