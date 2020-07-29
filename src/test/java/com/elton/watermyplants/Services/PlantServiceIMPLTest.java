@@ -18,11 +18,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WatermyplantsApplication.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
-class UserServiceIMPLTest
+class PlantServiceIMPLTest
 {
 
     @Autowired
-    private UserService userService;
+    private PlantService plantService;
 
     @BeforeEach
     void setUp()
@@ -39,38 +39,31 @@ class UserServiceIMPLTest
     @Test
     void findAll()
     {
-        assertEquals(3,userService.findAll().size());
+        assertEquals(3,plantService.findAll().size());
+
     }
 
-    //working
     @Test
-    void findUserById()
+    void findPlantById()
     {
-        assertEquals("testGracee", userService.findUserById(8).getUsername());
+        assertEquals("happy plant", plantService.findPlantById(1).getNickname());
 
     }
 
     @Test
     void delete()
     {
-        userService.delete(9);
-        assertEquals(2, userService.findAll().size());
-    }
-
-    @Test
-    void findByName()
-    {
+        plantService.delete(1);
+        assertEquals(2, plantService.findAll().size());
     }
 
     @Test
     void save()
     {
-
     }
 
     @Test
     void update()
     {
-
     }
 }

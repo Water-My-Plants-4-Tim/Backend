@@ -26,8 +26,6 @@ public class UserServiceIMPL implements UserService
     @Autowired
     private UserRepo userrepos;
 
-    @Autowired
-    private LocationService locationService;
 
     @Override
     public List<User> findAll()
@@ -57,10 +55,10 @@ public class UserServiceIMPL implements UserService
     @Override
     public User findByName(String name)
     {
-        User uu = userrepos.findByUsername(name.toLowerCase());
+        User uu = userrepos.findByUsername(name);
         if (uu == null)
         {
-            throw new EntityNotFoundException("Email not found!");
+            throw new EntityNotFoundException("User not found!");
         }
         return uu;
     }
@@ -92,7 +90,33 @@ public class UserServiceIMPL implements UserService
                     .add(new UserRole(newUser, addRole));
         }
 
+        newUser.getPlants().clear();
+        for(UserPlants up: user.getPlants())
+        {
+            newUser.getPlants().add(new UserPlants(newUser,up.getPlants()));
+        }
+
         return userrepos.save(newUser);
+
+    }
+
+
+    @Override
+    public User update(User user, long id)
+    {
+        User currentUser = findUserById(id);
+
+        if (user.getUsername() != null)
+        {
+            currentUser.setUsername(user.getUsername());
+        }
+
+        if (user.getPassword() != null)
+        {
+            currentUser.setPasswordNoEncrypt(user.getPassword());
+        }
+
+        return userrepos.save(currentUser);
 
     }
 }

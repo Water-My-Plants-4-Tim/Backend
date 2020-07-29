@@ -1,6 +1,5 @@
 package com.elton.watermyplants.Services;
 
-import com.elton.watermyplants.Models.Plant;
 import com.elton.watermyplants.Models.User;
 
 import java.util.List;
@@ -14,6 +13,10 @@ public interface UserService
     void delete(long id);
 
     User save(User user);
+
+    User update(
+            User user,
+            long id);
 
     User findByName(String name);
 }

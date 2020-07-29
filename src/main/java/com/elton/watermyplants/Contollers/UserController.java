@@ -8,12 +8,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -36,7 +36,7 @@ public class UserController
 
     // GET http://localhost:2019/users/user/1
     //working
-    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('USER')")
     @GetMapping(value = "/user/{userId}",
             produces = {"application/json"})
     public ResponseEntity<?> getUserById(
@@ -80,6 +80,36 @@ public class UserController
        userService.delete(userId);
        return new ResponseEntity<>(HttpStatus.OK);
    }
+
+   // working!
+    @PreAuthorize("hasAnyRole('USER')")
+    @PutMapping(value = "/user/{userid}",
+            consumes = "application/json")
+    public ResponseEntity<?> updateFullUser(
+            @Valid
+            @RequestBody
+                    User updateUser,
+            @PathVariable
+                    long userid)
+    {
+        updateUser.setUserid(userid);
+        userService.save(updateUser);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // working!!! Jeuse CHRIST
+    //    http://localhost:2019/users/myinfo
+    @GetMapping(value = "/myinfo", produces = {"application/json"})
+    public ResponseEntity<?> myInfo(Authentication authentication)
+    {
+        User u = userService.findByName(authentication.getName());
+        return new ResponseEntity<>(u,HttpStatus.OK);
+    }
+
+    // put for updating plant
+
+
 
 
 

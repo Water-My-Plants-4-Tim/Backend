@@ -1,16 +1,11 @@
 package com.elton.watermyplants.Services;
 
-import com.elton.watermyplants.Models.Location;
 import com.elton.watermyplants.Models.Plant;
-import com.elton.watermyplants.Models.PlantLocation;
-import com.elton.watermyplants.Models.User;
-import com.elton.watermyplants.Repos.LocationRepo;
 import com.elton.watermyplants.Repos.PlantRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,11 +14,7 @@ import java.util.List;
 @Service(value = "plantService")
 public class PlantServiceIMPL implements PlantService
 {
-    @Autowired
-    private LocationRepo locationRepo;
 
-    @Autowired
-    private PlantService plantService;
 
     @Autowired
     private PlantRepo plantRepo;
@@ -43,7 +34,7 @@ public class PlantServiceIMPL implements PlantService
     }
 
     @Override
-    public Plant findLocationById(long id)
+    public Plant findPlantById(long id)
     {
         return plantRepo.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Plant id " + id + " not found!"));
@@ -58,31 +49,40 @@ public class PlantServiceIMPL implements PlantService
 
     }
 
+
     @Transactional
     @Override
     public Plant save(Plant plant)
     {
+        return plantRepo.save(plant);
+    }
 
-        Plant newPlant = new Plant();
+    @Override
+    public Plant update(Plant plant, long id)
+    {
+        Plant currentPlant = findPlantById(id);
 
-        newPlant.setFrequency(plant.getFrequency());
-        newPlant.setNickname(plant.getNickname());
-        newPlant.setSpecies(plant.getSpecies());
-
-        newPlant.getPlantLocations()
-                .clear();
-        System.out.println(plant.getPlantLocations().size());
-        for (PlantLocation p : plant.getPlantLocations())
+        if(plant.getFrequency()!=null)
         {
-            System.out.println(p.getLocation().getLocationid());
-            Location newLocation = locationRepo.findById(p.getLocation().getLocationid())
-                    .orElseThrow(() -> new EntityNotFoundException("Location " + p.getLocation().getLocationid() + " not found!"));
+            currentPlant.setFrequency(plant.getFrequency());
+        }
+        if(plant.getLocation()!=null)
+        {
+            currentPlant.setLocation(plant.getLocation());
+        }
+        if(plant.getSpecies()!=null)
+        {
+            currentPlant.setSpecies(plant.getSpecies());
 
-            newPlant.getPlantLocations()
-                    .add(new PlantLocation( newLocation, newPlant));
+        }
+        if(plant.getNickname()!=null)
+        {
+            currentPlant.setNickname(plant.getNickname());
         }
 
+        return plantRepo.save(currentPlant);
 
-        return plantRepo.save(newPlant);
     }
+
+
 }

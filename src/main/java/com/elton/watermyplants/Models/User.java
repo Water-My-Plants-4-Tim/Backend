@@ -14,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class User extends  Auditable
+public class User extends Auditable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,16 +30,17 @@ public class User extends  Auditable
     private String password;
 
     @OneToMany(mappedBy = "user",
-            cascade = CascadeType.ALL, orphanRemoval = true)
+            cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "user",
             allowSetters = true)
-    private List<LocationUser>  locationUsers = new ArrayList<>();
+    private Set<UserRole> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL)
     @JsonIgnoreProperties(value = "user",
             allowSetters = true)
-    private Set<UserRole> roles = new HashSet<>();
+    private Set<UserPlants> plants = new HashSet<>();
+
 
     public User()
     {
@@ -51,10 +52,12 @@ public class User extends  Auditable
         setPassword(password);
     }
 
-    public User(Set<UserRole> roles ,String username, String password)
+    public User(String username, String password, Set<UserRole> roles, Set<UserPlants> plants)
     {
+        setUsername(username);
         setPassword(password);
         this.roles = roles;
+        this.plants = plants;
     }
 
     public long getUserid()
@@ -95,15 +98,7 @@ public class User extends  Auditable
         this.username = username;
     }
 
-    public List<LocationUser> getLocationUsers()
-    {
-        return locationUsers;
-    }
 
-    public void setLocationUsers(List<LocationUser> locationUsers)
-    {
-        this.locationUsers = locationUsers;
-    }
 
     public Set<UserRole> getRoles()
     {
@@ -129,4 +124,13 @@ public class User extends  Auditable
     }
 
 
+    public Set<UserPlants> getPlants()
+    {
+        return plants;
+    }
+
+    public void setPlants(Set<UserPlants> plants)
+    {
+        this.plants = plants;
+    }
 }
