@@ -1,5 +1,6 @@
 package com.elton.watermyplants.Services;
 
+import com.elton.watermyplants.Models.Plant;
 import com.elton.watermyplants.WatermyplantsApplication;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.AfterEach;
@@ -53,17 +54,34 @@ class PlantServiceIMPLTest
     @Test
     void delete()
     {
-        plantService.delete(1);
+        plantService.delete(3);
         assertEquals(2, plantService.findAll().size());
     }
 
     @Test
     void save()
     {
+        //this.frequency = frequency;
+        //        this.nickname = nickname;
+        //        this.location = location;
+        //        this.species = species;
+
+        Plant newPlant = new Plant("loser","loser","loser", "loser");
+
+        Plant addPlant = plantService.save((newPlant));
+        assertNotNull(addPlant);
+
+        Plant foundPlant = plantService.findPlantById(addPlant.getPlantid());
+        assertEquals(addPlant.getNickname(),foundPlant.getNickname());
+
     }
 
     @Test
     void update()
     {
+        Plant newPlant = new Plant("loser","loser","loser", "loser");
+
+        Plant updatePlant = plantService.update(newPlant, 1);
+        assertEquals("loser",updatePlant.getNickname());
     }
 }

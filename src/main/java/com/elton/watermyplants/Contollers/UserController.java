@@ -49,7 +49,7 @@ public class UserController
     }
    //  POST http://localhost:2019/users/user
     // working
-    @PostMapping(value = "/user", consumes = {"application/json"})
+    @PostMapping(value = "/user", produces = {"application/json"}, consumes = {"application/json"})
     public ResponseEntity<?> addUser(@Valid @RequestBody User newuser)
     {
         newuser.setUserid(0);
@@ -84,7 +84,7 @@ public class UserController
    // working!
     @PreAuthorize("hasAnyRole('USER')")
     @PutMapping(value = "/user/{userid}",
-            consumes = "application/json")
+            produces = {"application/json"},consumes = "application/json")
     public ResponseEntity<?> updateFullUser(
             @Valid
             @RequestBody

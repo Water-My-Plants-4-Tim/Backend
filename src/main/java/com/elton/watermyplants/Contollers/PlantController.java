@@ -29,7 +29,7 @@ public class PlantController
 
     // add new plant
     // not working but i think we are getting there
-    @PostMapping(value = "/users/plants", produces = {"application/json"})
+    @PostMapping(value = "/users/plants", produces = {"application/json"},consumes = "application/json")
     public ResponseEntity<?> listPlants(Authentication authentication, @Valid @RequestBody Plant newplant)
     {
         User u = userService.findByName(authentication.getName());
@@ -41,7 +41,7 @@ public class PlantController
 
     // Working
     @PutMapping(value = "/users/plants/{plantid}",
-            consumes = "application/json")
+            produces = {"application/json"}, consumes = "application/json")
     public ResponseEntity<?> updatePlant(Authentication authentication,
             @Valid
             @RequestBody
@@ -51,15 +51,15 @@ public class PlantController
     {
         User u = userService.findByName(authentication.getName());
         updatePlant.setPlantid(plantid);
+        updatePlant.getUsersPlants().add(new UserPlants(u, updatePlant));
         plantService.update(updatePlant, plantid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    // not working ugghhgghhgghh it says can't find plant? Weird?
-    @DeleteMapping(value = "/user/plant/plantid")
-    public ResponseEntity<?> deleteUserById(Authentication authentication , @PathVariable long plantid)
+    // working
+    @DeleteMapping(value = "/user/plant/{plantid}")
+    public ResponseEntity<?> deletePlantById( @PathVariable long plantid)
     {
-        User u = userService.findByName(authentication.getName());
         plantService.delete(plantid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
