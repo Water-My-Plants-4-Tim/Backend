@@ -27,8 +27,7 @@ public class PlantController
     @Autowired
     private PlantService plantService;
 
-    // add new plant
-    // not working but i think we are getting there
+    //working
     @PostMapping(value = "/users/plants", produces = {"application/json"},consumes = "application/json")
     public ResponseEntity<?> listPlants(Authentication authentication, @Valid @RequestBody Plant newplant)
     {
@@ -39,7 +38,7 @@ public class PlantController
         return new ResponseEntity<>(  null, HttpStatus.CREATED );
     }
 
-    // Working
+    // Working haha
     @PutMapping(value = "/users/plants/{plantid}",
             produces = {"application/json"}, consumes = "application/json")
     public ResponseEntity<?> updatePlant(Authentication authentication,
@@ -57,6 +56,7 @@ public class PlantController
     }
 
     // working
+    // mother is is working
     @DeleteMapping(value = "/user/plant/{plantid}")
     public ResponseEntity<?> deletePlantById( @PathVariable long plantid)
     {

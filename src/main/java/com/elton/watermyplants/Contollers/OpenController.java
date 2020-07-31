@@ -63,7 +63,7 @@ public class OpenController
         newuser.setPassword(newminuser.getPassword());
 
         Role normal = roleService.findByName("user");
-        newuser.getRoles().add(new UserRole(newuser,normal));
+        newuser.getRoles().add(new UserRole(newuser, normal));
 
         newuser = userService.save(newuser);
         // set the location header for the newly created resource

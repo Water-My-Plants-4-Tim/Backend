@@ -78,14 +78,13 @@ public class UserServiceIMPL implements UserService
         newUser.setUsername(user.getUsername());
         newUser.setPasswordNoEncrypt(user.getPassword());
 
+
         newUser.getRoles()
                 .clear();
-        System.out.println("this is the role number"+ user.getRoles().size());
         for (UserRole ur : user.getRoles())
         {
             Role addRole = roleService.findRoleById(ur.getRole()
                     .getRoleid());
-
             newUser.getRoles()
                     .add(new UserRole(newUser, addRole));
         }

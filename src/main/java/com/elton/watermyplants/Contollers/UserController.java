@@ -49,28 +49,27 @@ public class UserController
     }
    //  POST http://localhost:2019/users/user
     // working
-    @PostMapping(value = "/user", produces = {"application/json"}, consumes = {"application/json"})
-    public ResponseEntity<?> addUser(@Valid @RequestBody User newuser)
-    {
-        newuser.setUserid(0);
-        newuser = userService.save(newuser);
-
-        // set the location header for the newly created resource
-        HttpHeaders responseHeaders = new HttpHeaders();
-        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{userid}")
-                .buildAndExpand(newuser.getUserid())
-                .toUri();
-        responseHeaders.setLocation(newUserURI);
-
-        return new ResponseEntity<>(null,
-                responseHeaders,
-                HttpStatus.CREATED);
-    }
+//    @PostMapping(value = "/user", produces = {"application/json"}, consumes = {"application/json"})
+//    public ResponseEntity<?> addUser(@Valid @RequestBody User newuser)
+//    {
+//        newuser.setUserid(0);
+//        newuser = userService.save(newuser);
+//
+//        // set the location header for the newly created resource
+//        HttpHeaders responseHeaders = new HttpHeaders();
+//        URI newUserURI = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{userid}")
+//                .buildAndExpand(newuser.getUserid())
+//                .toUri();
+//        responseHeaders.setLocation(newUserURI);
+//
+//        return new ResponseEntity<>(null,
+//                responseHeaders,
+//                HttpStatus.CREATED);
+//    }
 
    // DELETE http://localhost:2019/users/user/1
     //working (but double check) hah
-
    @PreAuthorize("hasAnyRole('ADMIN')")
    @DeleteMapping(value = "/user/{userId}")
    public ResponseEntity<?> deleteUserById(
@@ -82,7 +81,6 @@ public class UserController
    }
 
    // working!
-    @PreAuthorize("hasAnyRole('USER')")
     @PutMapping(value = "/user/{userid}",
             produces = {"application/json"},consumes = "application/json")
     public ResponseEntity<?> updateFullUser(
@@ -106,10 +104,6 @@ public class UserController
         User u = userService.findByName(authentication.getName());
         return new ResponseEntity<>(u,HttpStatus.OK);
     }
-
-    // put for updating plant
-
-
 
 
 

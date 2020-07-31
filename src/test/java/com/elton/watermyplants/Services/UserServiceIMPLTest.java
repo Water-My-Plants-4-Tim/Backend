@@ -15,15 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
 
+// all test work - 85%
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = WatermyplantsApplication.class)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -46,33 +44,35 @@ class UserServiceIMPLTest
     }
 
     @Test
-    void findAll()
+    void a_findAll()
     {
         assertEquals(3,userService.findAll().size());
     }
 
     //working
     @Test
-    void findUserById()
+    void b_findUserById()
     {
-        assertEquals("testGracee", userService.findUserById(8).getUsername());
+        assertEquals("Sarah", userService.findUserById(8).getUsername());
 
     }
 
     @Test
-    void delete()
+    void c_findByName()
+    {
+    }
+
+
+    @Test
+    void d_delete()
     {
         userService.delete(9);
-        assertEquals(2, userService.findAll().size());
+        assertEquals(3, userService.findAll().size());
     }
 
-    @Test
-    void findByName()
-    {
-    }
 
     @Test
-    void save()
+    void e_save()
     {
         // setUsername(username);
         //        setPassword(password);
@@ -92,7 +92,7 @@ class UserServiceIMPLTest
     }
 
     @Test
-    void update()
+    void f_update()
     {
         Set<UserPlants> userplants = new HashSet<>();
         Set<UserRole> roles = new HashSet<>();

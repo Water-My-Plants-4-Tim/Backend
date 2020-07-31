@@ -51,7 +51,7 @@ public class SeedData
         r1 = roleService.save(r1);
         r2 = roleService.save(r2);
 
-        User u1 = new User("Gracee", "password");
+        User u1 = new User("testGracee", "password");
         u1.getRoles()
                 .add(new UserRole(u1, r1));
         u1.getPlants().add(new UserPlants(u1,p1));
